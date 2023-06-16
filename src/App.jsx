@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+
+import { Layout, Space, Button } from "antd";
+const { Header, Footer, Sider, Content } = Layout;
+const headerStyle = {
+  textAlign: "center",
+  color: "#fff",
+  height: 64,
+  paddingInline: 50,
+  lineHeight: "64px",
+  backgroundColor: "#7dbcea",
+};
+const contentStyle = {
+  textAlign: "center",
+  minHeight: `calc(100vh - 50px)`,
+  lineHeight: "120px",
+  color: "#fff",
+  backgroundColor: "#108ee9",
+};
+const siderStyle = {
+  textAlign: "center",
+  lineHeight: "120px",
+  color: "#fff",
+  backgroundColor: "#3ba0e9",
+};
+const footerStyle = {
+  textAlign: "center",
+  color: "#fff",
+  backgroundColor: "#7dbcea",
+  position:"sticky",
+  bottom:0,
+  minHeight: '50px'
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Space
+        direction="vertical"
+        style={{
+          width: "100%",
+        }}
+        size={[0, 48]}
+      >
+        <Layout>
+          <Header style={headerStyle}>Header</Header>
+          <Content style={contentStyle }>Content</Content>
+          <Footer style={footerStyle}>Footer</Footer>
+        </Layout>
+      </Space>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
