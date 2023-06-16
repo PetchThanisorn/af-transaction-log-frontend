@@ -50,7 +50,7 @@ function App() {
         <Layout>
           <Header style={headerStyle}>header</Header>
           <Content style={contentStyle }>Content</Content>
-          <Footer style={footerStyle}>Footer</Footer>
+          <Footer style={footerStyle}>footer</Footer>
         </Layout>
       </Space>
     </>
