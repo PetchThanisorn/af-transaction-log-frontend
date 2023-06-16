@@ -48,7 +48,7 @@ function App() {
         size={[0, 48]}
       >
         <Layout>
-          <Header style={headerStyle}>หัวเรื่อง</Header>
+          <Header style={headerStyle}>header</Header>
           <Content style={contentStyle }>Content</Content>
           <Footer style={footerStyle}>Footer</Footer>
         </Layout>
