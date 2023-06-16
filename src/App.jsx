@@ -50,7 +50,7 @@ function App() {
         <Layout>
           <Header style={headerStyle}>หัวเรื่อง</Header>
           <Content style={contentStyle }>Content</Content>
-          <Footer style={footerStyle}>ท้ายสุด</Footer>
+          <Footer style={footerStyle}>footer</Footer>
         </Layout>
       </Space>
     </>
