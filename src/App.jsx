@@ -2,17 +2,11 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import Home from "./components/Home/Home";
 
 import { Layout, Space, Button } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
-const headerStyle = {
-  textAlign: "center",
-  color: "#fff",
-  height: 64,
-  paddingInline: 50,
-  lineHeight: "64px",
-  backgroundColor: "#7dbcea",
-};
+
 const contentStyle = {
   textAlign: "center",
   minHeight: `calc(100vh - 50px)`,
@@ -30,8 +24,7 @@ const footerStyle = {
   textAlign: "center",
   color: "#fff",
   backgroundColor: "#7dbcea",
-  position:"sticky",
-  bottom:0,
+ 
   minHeight: '50px'
 };
 
@@ -48,7 +41,7 @@ function App() {
         size={[0, 48]}
       >
         <Layout>
-          <Header style={headerStyle}>Header</Header>
+          <Header className="header" >Header</Header>
           <Content style={contentStyle }>Content</Content>
           <Footer style={footerStyle}>Footer</Footer>
         </Layout>
