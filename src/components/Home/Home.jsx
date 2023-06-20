@@ -13,14 +13,9 @@ function readCSVFile(e) {
 
   // Load event
   reader.onload = function (event) {
-    // Read file data
     var csvdata = event.target.result;
-
-    // Split by line break to gets rows Array
     var rowData = csvdata.split("\n");
-    // Loop on the row Array (change row=0 if you also want to read 1st row)
     for (var row = 0; row < rowData.length; row++) {
-
      var rowColData = rowData[row].split(",");
       // Loop on the row column Array
       for (var col = 0; col < rowColData.length; col++) {
@@ -29,35 +24,23 @@ function readCSVFile(e) {
         }else{
           console.log(rowColData[col]);
         }
-      
       }
     }
   }
 };
-  
-const props = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-      console.log(info.file);
-      readCSVFile(info.file);
-      message.success(`${info.file.name} file uploaded successfully`);
-    }
-  },
-};
+
+const inputFileElement = (e)=>{
+  console.log("Click");
+  document.getElementById("upload-input").click();
+}
 
 function Home() {
   return (
     <div>
-      <input type="file" onChange={readCSVFile}></input>
-      <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-      </Upload>
+      <input id="upload-input" style={{display:"none"}} type="file" onChange={readCSVFile}></input>
+
+      <Button icon={<UploadOutlined />} onClick={inputFileElement}>Click to Upload</Button>
+    
     </div>
   );
 }
