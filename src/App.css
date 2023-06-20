@@ -50,4 +50,15 @@
   line-height: "64px";
   position: sticky;
   font-size: 16px;;
+  display: flex;
+}
+.nav-wrapper{
+  display: flex;
+  list-style: none;
+}
+li{
+  margin: 0 1rem;
+}
+li,a{
+  color: red;
 }

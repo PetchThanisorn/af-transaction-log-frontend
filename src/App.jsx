@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Home from "./components/Home/Home";
 import { Layout, Space, Button } from "antd";
-
+import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
 const { Header, Footer, Sider, Content } = Layout;
 
 const contentStyle = {
@@ -79,21 +79,38 @@ function App() {
 
   return (
     <>
-      <Space
-        direction="vertical"
-        style={{
-          width: "100%",
-        }}
-        size={[0, 48]}
-      >
-        <Layout>
-          <Header className="header">
-            <div>ACCLife Report Statement BBL</div>
-          </Header>
-          <Content style={contentStyle}> <Home></Home></Content>
-          <Footer style={footerStyle}>Footer</Footer>
-        </Layout>
-      </Space>
+      <Router>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+          size={[0, 48]}
+        >
+          <Layout>
+            <Header className="header">
+              <div>ACC-LiFe Statement BBL</div>
+              <ul className="nav-wrapper">
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/contact">Contact</Link>
+                </li>
+              </ul>
+            </Header>
+            <Content style={contentStyle}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+              </Routes>
+            </Content>
+            <Footer style={footerStyle}>Footer</Footer>
+          </Layout>
+        </Space>
+      </Router>
     </>
   );
 }
