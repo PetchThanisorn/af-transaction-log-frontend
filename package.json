@@ -14,6 +14,7 @@
     "antd": "^5.6.1",
     "axios": "^1.4.0",
     "csv-parser": "^3.0.0",
+    "legacy-encoding": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-papaparse": "^4.1.0",

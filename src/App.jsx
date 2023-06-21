@@ -1,19 +1,17 @@
 import { useState } from "react";
 import "./App.css";
+
 import Home from "./components/Home/Home";
 import { Layout, Space, Button } from "antd";
 import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
 const { Header, Footer, Sider, Content } = Layout;
-
-
-
-
 const contentStyle = {
   textAlign: "center",
   minHeight: `calc(100vh - 130px)`,
   lineHeight: "75px",
   color: "#120338",
   backgroundColor: "#efdbff",
+
 };
 const siderStyle = {
   textAlign: "center",
@@ -23,10 +21,10 @@ const siderStyle = {
 };
 const footerStyle = {
   textAlign: "center",
-  color: "#120338",
+  color: "#6e459a",
   backgroundColor: "#b37feb",
-
   minHeight: "50px",
+  
 };
 
 
@@ -45,7 +43,7 @@ function App() {
         >
           <Layout>
             <Header className="header">
-              <div>ACC-LiFe Statement BBL</div>
+              <div>ACC-Life Statement BBL</div>
               <ul className="nav-wrapper">
                 <li>
                   <Link to="/">Home</Link>
@@ -63,7 +61,7 @@ function App() {
                 <Route path="/" element={<Home />} />
               </Routes>
             </Content>
-            <Footer style={footerStyle}>ACC-LiFe Statement BBL</Footer>
+            <Footer className="footer" style={footerStyle}>ACC-LiFe Statement BBL</Footer>
           </Layout>
         </Space>
       </Router>
