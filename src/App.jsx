@@ -5,23 +5,26 @@ import { Layout, Space, Button } from "antd";
 import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
 const { Header, Footer, Sider, Content } = Layout;
 
+
+
+
 const contentStyle = {
   textAlign: "center",
-  minHeight: `calc(100vh - 50px)`,
-  lineHeight: "120px",
-  color: "#",
-  backgroundColor: "#d3adf7",
+  minHeight: `calc(100vh - 130px)`,
+  lineHeight: "75px",
+  color: "#120338",
+  backgroundColor: "#efdbff",
 };
 const siderStyle = {
   textAlign: "center",
-  lineHeight: "120px",
+  lineHeight: "50px",
   color: "#fff",
   backgroundColor: "#fff",
 };
 const footerStyle = {
   textAlign: "center",
-  color: "#fff",
-  backgroundColor: "#7dbcea",
+  color: "#120338",
+  backgroundColor: "#b37feb",
 
   minHeight: "50px",
 };
@@ -61,7 +64,7 @@ function App() {
                 <Route path="/" element={<Home />} />
               </Routes>
             </Content>
-            <Footer style={footerStyle}>Footer</Footer>
+            <Footer style={footerStyle}>ACC-LiFe Statement BBL</Footer>
           </Layout>
         </Space>
       </Router>
