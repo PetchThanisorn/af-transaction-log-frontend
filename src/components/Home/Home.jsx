@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   UploadOutlined,
   FileAddTwoTone,
@@ -12,7 +12,9 @@ import "./Home.css";
 function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
-  const reversed = list.reverse();
+  const [count, setCount] = useState(0);
+  
+
   const columns = [
     {
       title: "Trans Date",
@@ -52,18 +54,22 @@ function Home() {
   ];
 
   async function readCSVFile(e) {
+
     let fieldHeader = {};
     let rowsHeaderName = [];
     let isHeaderRow = {};
     let rowStatement = {};
     let reader = new FileReader();
-    let accountNo= "" ;
-    setList([]);
+    let accountNo = "";
+    let rows = [];
+
     // Read file as string
     reader.readAsText(e.target.files[0]);
 
     // Load event
     reader.onload = function (event) {
+ 
+      
       let csvdata_original = event.target.result;
       let csvdata = csvdata_original;
       const encoder = new TextEncoder("utf-8");
@@ -72,7 +78,7 @@ function Home() {
       // Convert Uint8Array from Windows-874 to UTF-8
       const decoder = new TextDecoder("tis-620");
       const utf8String = decoder.decode(encodedData);
-      console.log(utf8String);
+
       let start = 0;
       let end = 0;
 
@@ -91,7 +97,7 @@ function Home() {
           }
         }
       }
-      console.log(csvdata);
+
       let rowData = csvdata.split("\n");
       for (let row = 0; row < rowData.length; row++) {
         if (
@@ -99,29 +105,32 @@ function Home() {
         ) {
           isHeaderRow = { headerRow: row };
         }
+
         let rowColData = rowData[row].split(",");
 
         for (let col = 0; col < rowColData.length; col++) {
           //หัวตาราง
           if (isHeaderRow["headerRow"] == row && col != rowColData.length - 1) {
-            rowsHeaderName.push(rowColData[col].replace(/\s/g, ""));
+            if (rowColData[col] == "Cheque No.") {
+            }
+            rowsHeaderName.push(rowColData[col].replace(/\s|\./g, ""));
           }
           //ตาราง
           if (
             isHeaderRow["headerRow"] < row &&
-            col != rowColData.length  &&
+            col != rowColData.length &&
             end == 0
           ) {
             rowStatement[rowsHeaderName[col]] = rowColData[col].replaceAll(/\r/g,"");
-            
             if (col == rowColData.length - 1) {
               //added Data to rowStatement
-              rowStatement["AccNo"] = accountNo 
-              list.push(rowStatement);
+              rowStatement["AccNo"] = accountNo;
+              delete Object.assign(rowStatement, {["Description"]:rowStatement["Description"] + "  " + rowStatement["ChequeNo"],})["ChequeNo"];
+              rowStatement['key'] = (row - start).toString();
+              rows.push(rowStatement);
               rowStatement = {};
             }
             if (rowColData[0] == "") {
-              console.log(row);
               end = row;
             }
           }
@@ -138,11 +147,11 @@ function Home() {
             fieldHeader = {};
           }
         }
-        
       }
-      setList(reversed.reverse());
-      console.log(list);
+    
+      setList(rows.reverse());
     };
+
   }
 
   const inputFileElement = (e) => {
@@ -165,6 +174,11 @@ function Home() {
     this.setState({ postId: data.id });
   };
 
+  useEffect(() => {
+    console.log(list);
+    // setList(list)
+  }, [list]);
+
   return (
     <div className="home">
       <input
@@ -180,11 +194,11 @@ function Home() {
       <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
         Remove
       </Button>
-      <Table dataSource={list} columns={columns} />
-
+      <Table key={list.length} dataSource={list} columns={columns} />
       <Button icon={<UploadOutlined />} onClick={insertApi}>
         Upload Statement
       </Button>
+      <Button onClick={()=>{setCount(0)}}>count is : {count}</Button>
     </div>
   );
 }
