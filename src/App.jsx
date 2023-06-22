@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom"
 const { Header, Footer, Sider, Content } = Layout;
 const contentStyle = {
   textAlign: "center",
-  minHeight: `calc(100vh - 130px)`,
+  minHeight: `calc(100vh - 133px)`,
   lineHeight: "75px",
   color: "#120338",
   backgroundColor: "#efdbff",
@@ -21,8 +21,8 @@ const siderStyle = {
 };
 const footerStyle = {
   textAlign: "center",
-  color: "#6e459a",
-  backgroundColor: "#b37feb",
+  color: "#fff",
+  backgroundColor: "#6e459a",
   minHeight: "50px",
   
 };
