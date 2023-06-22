@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { UploadOutlined, FileAddTwoTone, DeleteTwoTone } from "@ant-design/icons";
+import {
+  UploadOutlined,
+  FileAddTwoTone,
+  DeleteTwoTone,
+} from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Space, Table, Tag } from "antd";
 import { encode, decode, labels } from "windows-874";
@@ -47,14 +51,13 @@ function Home() {
     },
   ];
 
-  let fieldHeader = {};
-
-  let rowsHeaderName = [];
-  let isHeaderRow = {};
-  let rowStatement = {};
-
   async function readCSVFile(e) {
+    let fieldHeader = {};
+    let rowsHeaderName = [];
+    let isHeaderRow = {};
+    let rowStatement = {};
     let reader = new FileReader();
+    let accountNo= "" ;
     setList([]);
     // Read file as string
     reader.readAsText(e.target.files[0]);
@@ -63,11 +66,11 @@ function Home() {
     reader.onload = function (event) {
       let csvdata_original = event.target.result;
       let csvdata = csvdata_original;
-      const encoder = new TextEncoder('utf-8');
+      const encoder = new TextEncoder("utf-8");
       const encodedData = encoder.encode(csvdata);
-  
+
       // Convert Uint8Array from Windows-874 to UTF-8
-      const decoder = new TextDecoder('tis-620');
+      const decoder = new TextDecoder("tis-620");
       const utf8String = decoder.decode(encodedData);
       console.log(utf8String);
       let start = 0;
@@ -88,7 +91,7 @@ function Home() {
           }
         }
       }
-
+      console.log(csvdata);
       let rowData = csvdata.split("\n");
       for (let row = 0; row < rowData.length; row++) {
         if (
@@ -103,16 +106,17 @@ function Home() {
           if (isHeaderRow["headerRow"] == row && col != rowColData.length - 1) {
             rowsHeaderName.push(rowColData[col].replace(/\s/g, ""));
           }
-
           //ตาราง
           if (
             isHeaderRow["headerRow"] < row &&
-            col != rowColData.length - 1 &&
+            col != rowColData.length  &&
             end == 0
           ) {
-            rowStatement[rowsHeaderName[col]] = rowColData[col];
-            if (col == rowColData.length - 2) {
+            rowStatement[rowsHeaderName[col]] = rowColData[col].replaceAll(/\r/g,"");
+            
+            if (col == rowColData.length - 1) {
               //added Data to rowStatement
+              rowStatement["AccNo"] = accountNo 
               list.push(rowStatement);
               rowStatement = {};
             }
@@ -125,18 +129,16 @@ function Home() {
           if (rowColData[col] == "Account No.") {
             fieldHeader = { fieldName: "", next: col + 1 };
           }
-          //ฟิลด์ข้อมูล Account No.
-          if (rowColData[col] == "Account Nickname") {
-            fieldHeader = { fieldName: "", next: col + 1 };
-          }
           //บันทึกฟิลด์ข้อมูลตาม fieldHeader
           if (
             Object.keys(fieldHeader).length > 0 &&
             fieldHeader["next"] == col
           ) {
+            accountNo = rowColData[col];
             fieldHeader = {};
           }
         }
+        
       }
       setList(reversed.reverse());
       console.log(list);
@@ -148,6 +150,21 @@ function Home() {
     document.getElementById("upload-input").click();
   };
 
+  const insertApi = async (e) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ file: "", data: list }),
+    };
+    const response = await fetch(
+      "http://127.0.0.1:3000/statement/insert",
+      requestOptions
+    );
+    const data = await response.json();
+    console.log(data);
+    this.setState({ postId: data.id });
+  };
+
   return (
     <div className="home">
       <input
@@ -156,12 +173,18 @@ function Home() {
         type="file"
         onChange={readCSVFile}
       ></input>
-      
-      <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>เพิ่มไฟล์ CSV</Button>
-      <Button icon={<DeleteTwoTone />} onClick={()=>setList([])}>Remove</Button>
+
+      <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
+        เพิ่มไฟล์ CSV
+      </Button>
+      <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
+        Remove
+      </Button>
       <Table dataSource={list} columns={columns} />
 
-      <Button icon={<UploadOutlined />} onClick={""}>Upload Statement</Button>
+      <Button icon={<UploadOutlined />} onClick={insertApi}>
+        Upload Statement
+      </Button>
     </div>
   );
 }
