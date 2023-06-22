@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, FileAddTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Space, Table, Tag } from "antd";
 import { encode, decode, labels } from "windows-874";
@@ -8,6 +8,7 @@ import "./Home.css";
 function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
+  const reversed = list.reverse();
   const columns = [
     {
       title: "Trans Date",
@@ -137,7 +138,7 @@ function Home() {
           }
         }
       }
-      setList(list);
+      setList(reversed.reverse());
       console.log(list);
     };
   }
@@ -146,6 +147,7 @@ function Home() {
     console.log("Click");
     document.getElementById("upload-input").click();
   };
+
   return (
     <div className="home">
       <input
@@ -154,12 +156,12 @@ function Home() {
         type="file"
         onChange={readCSVFile}
       ></input>
-      <Button icon={<UploadOutlined />} onClick={inputFileElement}>
-        Click to Upload
-      </Button>
+      
+      <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>เพิ่มไฟล์ CSV</Button>
+      <Button icon={<DeleteTwoTone />} onClick={()=>setList([])}>Remove</Button>
       <Table dataSource={list} columns={columns} />
 
-      <Button onClick={""}>Remove</Button>
+      <Button icon={<UploadOutlined />} onClick={""}>Upload Statement</Button>
     </div>
   );
 }
