@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   UploadOutlined,
   FileAddTwoTone,
@@ -13,54 +13,46 @@ function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
-  
 
   const columns = [
     {
       title: "Trans Date",
-      dataIndex: "TransDate",
-      key: "TransDate",
+      dataIndex: "transdate",
+      key: "transdate",
     },
     {
       title: "Effect Date",
-      dataIndex: "EffectDate",
-      key: "EffectDate",
+      dataIndex: "effectdate",
+      key: "effectdate",
     },
     {
       title: "Description",
-      dataIndex: "Description",
-      key: "Description",
-    },
-    {
-      title: "ChequeNo.",
-      dataIndex: "ChequeNo.",
-      key: "ChequeNo.",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Debit",
-      dataIndex: "Debit",
-      key: "Debit",
+      dataIndex: "debit",
+      key: "debit",
     },
     {
       title: "Credit",
-      dataIndex: "Credit",
-      key: "Credit",
+      dataIndex: "credit",
+      key: "credit",
     },
     {
       title: "Balance",
-      dataIndex: "Balance",
-      key: "Balance",
+      dataIndex: "balance",
+      key: "balance",
     },
     {
       title: "Channel",
-      dataIndex: "Channel",
-      key: "Channel",
+      dataIndex: "channel",
+      key: "channel",
     },
-
   ];
 
   async function readCSVFile(e) {
-
     let fieldHeader = {};
     let rowsHeaderName = [];
     let isHeaderRow = {};
@@ -74,8 +66,6 @@ function Home() {
 
     // Load event
     reader.onload = function (event) {
- 
-      
       let csvdata_original = event.target.result;
       let csvdata = csvdata_original;
       const encoder = new TextEncoder("utf-8");
@@ -117,9 +107,9 @@ function Home() {
         for (let col = 0; col < rowColData.length; col++) {
           //หัวตาราง
           if (isHeaderRow["headerRow"] == row && col != rowColData.length - 1) {
-            if (rowColData[col] == "Cheque No.") {
-            }
-            rowsHeaderName.push(rowColData[col].replace(/\s|\./g, ""));
+            let colHeader = rowColData[col].replace(/\s|\./g, "");
+            console.log(colHeader.toLowerCase());
+            rowsHeaderName.push(colHeader.toLowerCase());
           }
           //ตาราง
           if (
@@ -127,12 +117,22 @@ function Home() {
             col != rowColData.length &&
             end == 0
           ) {
-            rowStatement[rowsHeaderName[col]] = rowColData[col].replaceAll(/\r/g,"");
+            rowStatement[rowsHeaderName[col]] = rowColData[col].replaceAll(
+              /\r/g,
+              ""
+            );
             if (col == rowColData.length - 1) {
               //added Data to rowStatement
-              rowStatement["AccNo"] = accountNo;
-              delete Object.assign(rowStatement, {["Description"]:rowStatement["Description"] + "  " + rowStatement["ChequeNo"],})["ChequeNo"];
-              rowStatement['key'] = (row - start).toString();
+              rowStatement["accno"] = accountNo;
+              if (rowStatement["chequeno"]) {
+                delete Object.assign(rowStatement, {
+                  ["description"]:
+                    rowStatement["description"] +
+                    "   " +
+                    rowStatement["chequeno"],
+                })["ChequeNo"];
+              }
+              rowStatement["key"] = (row - start).toString();
               rows.push(rowStatement);
               rowStatement = {};
             }
@@ -154,10 +154,9 @@ function Home() {
           }
         }
       }
-    
+
       setList(rows.reverse());
     };
-
   }
 
   const inputFileElement = (e) => {
@@ -177,7 +176,6 @@ function Home() {
     );
     const data = await response.json();
     console.log(data);
-    this.setState({ postId: data.id });
   };
 
   useEffect(() => {
@@ -187,24 +185,36 @@ function Home() {
 
   return (
     <div className="home">
-      <input
-        id="upload-input"
-        style={{ display: "none" }}
-        type="file"
-        onChange={readCSVFile}
-      ></input>
+      <div>
+        <input
+          id="upload-input"
+          style={{ display: "none" }}
+          type="file"
+          onChange={readCSVFile}
+        ></input>
 
-      <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
-        เพิ่มไฟล์ CSV
-      </Button>
-      <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
-        Remove
-      </Button>
-      <Table dataSource={list} columns={columns} />
-      <Button icon={<UploadOutlined />} onClick={insertApi}>
-        Upload Statement
-      </Button>
-      <Button onClick={()=>{setCount(0)}}>count is : {count}</Button>
+        <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
+          เพิ่มไฟล์ CSV
+        </Button>
+        <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
+          Remove
+        </Button>
+      </div>
+      <div>
+        {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
+      </div>
+      <div>
+        <Button icon={<UploadOutlined />} onClick={insertApi}>
+          Upload Statement
+        </Button>
+        <Button
+          onClick={() => {
+            setCount(0);
+          }}
+        >
+          count is : {count}
+        </Button>
+      </div>
     </div>
   );
 }
