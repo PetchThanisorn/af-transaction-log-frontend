@@ -1,13 +1,14 @@
 import { useState } from "react";
 import "./App.css";
-
+import Select from "./components/SelectStatement/Select";
 import Home from "./components/Home/Home";
 import { Layout, Space, Button } from "antd";
 import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
+
 const { Header, Footer, Sider, Content } = Layout;
 const contentStyle = {
   textAlign: "center",
-  minHeight: `calc(100vh - 133px)`,
+  minHeight: `calc(100vh - 143px)`,
   lineHeight: "75px",
   color: "#120338",
   backgroundColor: "#efdbff",
@@ -49,7 +50,7 @@ function App() {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/about">About</Link>
+                  <Link to="/SelectStatement">Select Statement</Link>
                 </li>
                 <li>
                   <Link to="/contact">Contact</Link>
@@ -59,6 +60,7 @@ function App() {
             <Content style={contentStyle}>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/SelectStatement" element={<Select />} />
               </Routes>
             </Content>
             <Footer className="footer" style={footerStyle}>ACC-LiFe Statement BBL</Footer>

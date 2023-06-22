@@ -32,6 +32,11 @@ function Home() {
       key: "Description",
     },
     {
+      title: "ChequeNo.",
+      dataIndex: "ChequeNo.",
+      key: "ChequeNo.",
+    },
+    {
       title: "Debit",
       dataIndex: "Debit",
       key: "Debit",
@@ -51,6 +56,7 @@ function Home() {
       dataIndex: "Channel",
       key: "Channel",
     },
+
   ];
 
   async function readCSVFile(e) {
@@ -194,7 +200,7 @@ function Home() {
       <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
         Remove
       </Button>
-      <Table key={list.length} dataSource={list} columns={columns} />
+      <Table dataSource={list} columns={columns} />
       <Button icon={<UploadOutlined />} onClick={insertApi}>
         Upload Statement
       </Button>
