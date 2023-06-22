@@ -56,18 +56,23 @@ function Home() {
     let reader = new FileReader();
     setList([]);
     // Read file as string
-    reader.readAsText(e.target.files[0], "UTF-8");
+    reader.readAsText(e.target.files[0]);
 
     // Load event
     reader.onload = function (event) {
       let csvdata_original = event.target.result;
       let csvdata = csvdata_original;
-      const enc = encode(csvdata, {
-        mode: "replacement",
-      });
-      console.log(csvdata);
+      const encoder = new TextEncoder('utf-8');
+      const encodedData = encoder.encode(csvdata);
+  
+      // Convert Uint8Array from Windows-874 to UTF-8
+      const decoder = new TextDecoder('tis-620');
+      const utf8String = decoder.decode(encodedData);
+      console.log(utf8String);
       let start = 0;
       let end = 0;
+
+      //Clearing /, /"
       for (let i = 0; i < csvdata_original.length; i++) {
         if (csvdata_original[i] == '"') {
           if (start == 0) {
@@ -106,8 +111,8 @@ function Home() {
           ) {
             rowStatement[rowsHeaderName[col]] = rowColData[col];
             if (col == rowColData.length - 2) {
+              //added Data to rowStatement
               list.push(rowStatement);
-
               rowStatement = {};
             }
             if (rowColData[0] == "") {
