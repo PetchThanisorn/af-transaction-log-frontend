@@ -71,4 +71,5 @@ button:focus-visible {
 body{
   margin: 0;
   font-family: 'Kanit';
+  font-size: 22px;
 }

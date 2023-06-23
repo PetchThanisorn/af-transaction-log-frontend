@@ -181,7 +181,6 @@ function Home() {
 
   useEffect(() => {
     console.log(list);
-    // setList(list)
   }, [list]);
 
   return (
@@ -198,11 +197,11 @@ function Home() {
         <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
           เพิ่มไฟล์ CSV
         </Button>
-        <>  </>
+     
         <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
         ล้างข้อมูลในตาราง
         </Button>
-        <>  </>
+       
       </div>
       <div>
         {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
