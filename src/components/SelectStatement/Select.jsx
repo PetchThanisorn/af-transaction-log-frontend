@@ -52,26 +52,6 @@ function SelectStatement() {
 
   return (
     <div className="Select">
-      {/* <Button
-        onClick={() => {
-          console.log(year);
-          let val = year.map((year) => ({
-            label: year,
-            value: year,
-          }));
-          console.log(val);
-        }}
-      ></Button>
-      <Button
-        onClick={() => {
-          console.log(month);
-          let val = month.map((month) => ({
-            label: month,
-            value: month,
-          }));
-          console.log(val);
-        }}
-      ></Button> */}
 
       <span>กรุณาเลือก ปี :</span>
 
