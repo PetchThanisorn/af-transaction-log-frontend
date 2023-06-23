@@ -42,7 +42,7 @@
 } */
 
 .header{
-  background-color: #6e459a;
+  background-color: #967E76 ;
   color: white;
   text-align: "center";
   height: 65px;
@@ -55,8 +55,8 @@
 }
 .footer{
   text-align: "center";
-  color: "#6e459a";
-  background-color: "#b37feb";
+  color: "#85A389";
+  background-color: "#85A389";
   font-size: 22px;
   min-height: "50px";
   font-family: 'Kanit';

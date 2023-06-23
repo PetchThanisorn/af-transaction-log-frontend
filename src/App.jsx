@@ -6,13 +6,13 @@ import { Layout, Space, Button } from "antd";
 import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
 
 const { Header, Footer, Sider, Content } = Layout;
+
 const contentStyle = {
   textAlign: "center",
-  minHeight: `calc(100vh - 143px)`,
+  minHeight: `calc(100vh - 137px)`,
   lineHeight: "75px",
   color: "#120338",
-  backgroundColor: "#efdbff",
-
+  backgroundColor: "#D7C0AE",
 };
 const siderStyle = {
   textAlign: "center",
@@ -23,7 +23,7 @@ const siderStyle = {
 const footerStyle = {
   textAlign: "center",
   color: "#fff",
-  backgroundColor: "#6e459a",
+  backgroundColor: "#967E76",
   minHeight: "50px",
   
 };

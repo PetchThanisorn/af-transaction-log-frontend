@@ -136,19 +136,7 @@ function Select() {
           </Typography.Link>
           </Dropdown>
           <>  </>
-          <Dropdown menu={{
-          itemss,
-          selectable: true,
-          defaultSelectedKeys: ['1'],
-          }} >
-          <Typography.Link>
-          <Space>
-          เลือกเดือน
-          <DownOutlined />
-          </Space>
-          </Typography.Link>
-          </Dropdown>
-          <>  </>
+          
           <Button icon={<SelectOutlined />} onClick={() => {}}>
             ค้นหา
           </Button>
