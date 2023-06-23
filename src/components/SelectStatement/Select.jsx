@@ -150,6 +150,11 @@ function SelectStatement() {
       </div>
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
+     <Button
+        onClick={(e) => {}}
+      >
+        ลบข้อมูลของเดือนนี้
+      </Button>
       </div>
     
     </div>
