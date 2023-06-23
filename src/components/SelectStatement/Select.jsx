@@ -7,6 +7,7 @@ import './Select.css';
 
 function Select() {
     
+
     //item Dropdown
     const items = [
         {
@@ -20,6 +21,57 @@ function Select() {
         {
           key: '3',
           label: '2023',
+        },
+      ];
+
+      const itemss = [
+        {
+          key: '1',
+          label: 'มกราคม',
+        },
+        {
+          key: '2',
+          label: 'กุมภาพันธ์',
+        },
+        {
+          key: '3',
+          label: 'มีนาคม',
+        },
+        {
+          key: '4',
+          label: 'เมษายน',
+        },
+        {
+          key: '5',
+          label: 'พฤษภาคม',
+        },
+        {
+          key: '6',
+          label: 'มิถุนายน',
+        },
+        {
+          key: '7',
+          label: 'กรกฎาคม',
+        },
+        {
+          key: '8',
+          label: 'สิงหาคม',
+        },
+        {
+          key: '9',
+          label: 'กันยายน',
+        },
+        {
+          key: '10',
+          label: 'ตุลาคม',
+        },
+        {
+          key: '11',
+          label: 'พฤศจิกายน',
+        },
+        {
+          key: '12',
+          label: 'ธันวาคม',
         },
       ];
     
@@ -74,7 +126,7 @@ function Select() {
           <Dropdown menu={{
           items,
           selectable: true,
-          defaultSelectedKeys: ['3'],
+          defaultSelectedKeys: ['1'],
           }} >
           <Typography.Link>
           <Space>
@@ -83,7 +135,20 @@ function Select() {
           </Space>
           </Typography.Link>
           </Dropdown>
-          <>   </>
+          <>  </>
+          <Dropdown menu={{
+          itemss,
+          selectable: true,
+          defaultSelectedKeys: ['1'],
+          }} >
+          <Typography.Link>
+          <Space>
+          เลือกเดือน
+          <DownOutlined />
+          </Space>
+          </Typography.Link>
+          </Dropdown>
+          <>  </>
           <Button icon={<SelectOutlined />} onClick={() => {}}>
             ค้นหา
           </Button>
