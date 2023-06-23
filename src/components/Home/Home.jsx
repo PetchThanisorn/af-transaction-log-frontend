@@ -183,6 +183,9 @@ function Home() {
     console.log(list);
   }, [list]);
 
+  const [showUpload, setShowUpload] = useState(false);
+  const [showCount, setShowCount] = useState(false);
+  
   return (
     <div className="home">
       <div>
@@ -192,32 +195,41 @@ function Home() {
           type="file"
           onChange={readCSVFile}
         ></input>
-        
-        
-        <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
+  
+        <Button icon={<FileAddTwoTone />} onClick={() => {
+          inputFileElement();
+          setShowUpload(true);
+          setShowCount(true);
+        }}>
           เพิ่มไฟล์ CSV
         </Button>
-     
-        <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
-        ล้างข้อมูลในตาราง
+  
+        <Button icon={<DeleteTwoTone />} onClick={() => {
+          setList([]);
+          setShowUpload(false);
+          setShowCount(false);
+        }}>
+          ล้างข้อมูลในตาราง
         </Button>
-       
       </div>
       <div>
-        {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
+        {list.length === 0 ? null : <Table dataSource={list} columns={columns} />}
       </div>
       <div>
-        <Button icon={<UploadOutlined />} onClick={insertApi}>
-          Upload Statement
-        </Button>
+        {showUpload && (
+          <Button icon={<UploadOutlined />} onClick={insertApi}>
+            Upload Statement
+          </Button>
+        )}
         <> </>
-        <Button
-          onClick={() => {
+        {showCount && (
+          <Button onClick={() => {
             setCount(0);
-          }}
-        >
-          count is : {count}
-        </Button>
+            setShowCount(false);
+          }}>
+            count is: {count}
+          </Button>
+        )}
       </div>
     </div>
   );
