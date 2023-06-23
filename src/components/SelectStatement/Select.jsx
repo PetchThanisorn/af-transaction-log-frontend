@@ -148,8 +148,8 @@ function SelectStatement() {
         ค้นหา
       </Button>
       </div>
-      <div>
-      {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
+      <div style= {list.length == 0 ? {display : "none"} : null}>
+     <Table dataSource={list} columns={columns} /> 
       </div>
     
     </div>
