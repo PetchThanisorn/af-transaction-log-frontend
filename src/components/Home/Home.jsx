@@ -180,7 +180,6 @@ function Home() {
 
   useEffect(() => {
     console.log(list);
-    // setList(list)
   }, [list]);
 
   return (
