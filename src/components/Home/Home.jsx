@@ -13,6 +13,7 @@ function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
+  const [show,setShow] = useState(true);
 
   const columns = [
     {
@@ -192,13 +193,16 @@ function Home() {
           type="file"
           onChange={readCSVFile}
         ></input>
-
+        
+        
         <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
           เพิ่มไฟล์ CSV
         </Button>
+        <>  </>
         <Button icon={<DeleteTwoTone />} onClick={() => setList([])}>
-          Remove
+        ล้างข้อมูลในตาราง
         </Button>
+        <>  </>
       </div>
       <div>
         {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
@@ -207,6 +211,7 @@ function Home() {
         <Button icon={<UploadOutlined />} onClick={insertApi}>
           Upload Statement
         </Button>
+        <> </>
         <Button
           onClick={() => {
             setCount(0);
