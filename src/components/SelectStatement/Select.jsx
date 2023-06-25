@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SelectOutlined, DeleteTwoTone, DownOutlined } from "@ant-design/icons";
+import { SelectOutlined, DeleteTwoTone } from "@ant-design/icons";
 import {
   Space,
   Table,
@@ -143,20 +143,20 @@ function SelectStatement() {
       <Button
         onClick={(e) => {
           selectApi()
-        }}
+        }} 
+        icon = {<SelectOutlined />}
       >
         ค้นหา
       </Button>
       </div>
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
-     <Button
-        onClick={(e) => {}}
-      >
-        ลบข้อมูลของเดือนนี้
-      </Button>
       </div>
-    
+
+
+      <Button icon = {<DeleteTwoTone />} onClick={""}>
+        ลบข้อมูลของเดือนนี้
+        </Button>
     </div>
   );
 }
