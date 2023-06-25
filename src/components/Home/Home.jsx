@@ -187,14 +187,10 @@ function Home() {
       <div>
         <input
           id="upload-input"
-          style={{ display: "none" }}
+          style={{ display: file.name }}
           type="file"
           onChange={readCSVFile}
         ></input>
-          
-        <p key={file.name}>
-            {file.name}
-          </p>
           
         <Button icon={<FileAddTwoTone />} onClick={inputFileElement} >
           เพิ่มไฟล์ CSV
