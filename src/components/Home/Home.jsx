@@ -178,16 +178,19 @@ function Home() {
     console.log(data);
   };
 
+  
+
   useEffect(() => {
     console.log(list);
   }, [list]);
+
 
   return (
     <div className="home">
       <div>
         <input
           id="upload-input"
-          style={{ display: file.name }}
+          style={{ display: "none" }}
           type="file"
           onChange={readCSVFile}
         ></input>
@@ -207,7 +210,11 @@ function Home() {
         {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
       </div>
       <div>
-        <Button icon={<UploadOutlined />} onClick={insertApi}>
+      <Button icon={<UploadOutlined />} onClick={() => {
+            insertApi().then(() => {
+              setCount(count + 1); // Increase count by 1 on successful insertApi
+            });
+          }}>
           Upload Statement
         </Button>
         
@@ -218,6 +225,8 @@ function Home() {
         >
           count is : {count}
         </Button>
+
+       
       </div>
     </div>
   );

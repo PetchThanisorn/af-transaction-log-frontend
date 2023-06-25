@@ -159,7 +159,6 @@ function SelectStatement() {
           value: month.padStart(2, "0"),
         }))}
       />
-
       <Button
         onClick={(e) => {
           selectApi()
@@ -168,11 +167,16 @@ function SelectStatement() {
       >
         ค้นหา
       </Button>
+ 
+      
       </div>
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
       </div>
-    
+     
+      <Button icon = {<DeleteTwoTone />} onClick={deleteApi}>
+        ลบข้อมูลของเดือนนี้
+        </Button>
     </div>
    
 
