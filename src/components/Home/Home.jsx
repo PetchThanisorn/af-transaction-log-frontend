@@ -13,7 +13,6 @@ function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
-  const [show,setShow] = useState(true);
 
   const columns = [
     {
@@ -183,9 +182,10 @@ function Home() {
     console.log(list);
   }, [list]);
 
-  const [showUpload, setShowUpload] = useState(false);
-  const [showCount, setShowCount] = useState(false);
+
+
   
+
   return (
     <div className="home">
       <div>
@@ -196,40 +196,36 @@ function Home() {
           onChange={readCSVFile}
         ></input>
   
-        <Button icon={<FileAddTwoTone />} onClick={() => {
-          inputFileElement();
-          setShowUpload(true);
-          setShowCount(true);
-        }}>
+        <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
           เพิ่มไฟล์ CSV
         </Button>
   
         <Button icon={<DeleteTwoTone />} onClick={() => {
           setList([]);
-          setShowUpload(false);
-          setShowCount(false);
         }}>
           ล้างข้อมูลในตาราง
-        </Button>
+      </Button>
+       
       </div>
       <div>
-        {list.length === 0 ? null : <Table dataSource={list} columns={columns} />}
+        {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
       </div>
       <div>
-        {showUpload && (
-          <Button icon={<UploadOutlined />} onClick={insertApi}>
-            Upload Statement
-          </Button>
-        )}
-        <> </>
-        {showCount && (
-          <Button onClick={() => {
-            setCount(0);
-            setShowCount(false);
+      <Button icon={<UploadOutlined />} onClick={() => {
+            insertApi().then(() => {
+              setCount(count + 1); // Increase count by 1 on successful insertApi
+            });
           }}>
-            count is: {count}
-          </Button>
-        )}
+          Upload Statement
+        </Button>
+        
+        <Button
+          onClick={() => {
+            setCount(0);
+          }}
+        >
+          count is : {count}
+        </Button>
       </div>
     </div>
   );

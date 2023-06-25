@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SelectOutlined, DeleteTwoTone, DownOutlined } from "@ant-design/icons";
+import { SelectOutlined, DeleteTwoTone } from "@ant-design/icons";
 import {
   Space,
   Table,
@@ -111,8 +111,28 @@ function SelectStatement() {
       dataIndex: "terminalno",
       key: "terminalno",
     },
-  ];
 
+  
+    
+  ];
+  
+  const deleteApi = async () => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ year: yearSelect, month: monthSelect }),
+      };
+      const response = await fetch(
+        "http://127.0.0.1:3000/statement/delete",
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div className="Select">
       <div>
@@ -143,7 +163,8 @@ function SelectStatement() {
       <Button
         onClick={(e) => {
           selectApi()
-        }}
+        }} 
+        icon = {<SelectOutlined />}
       >
         ค้นหา
       </Button>
@@ -151,9 +172,18 @@ function SelectStatement() {
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
       </div>
-    
+        
+
+      <Button icon={<DeleteTwoTone />} onClick={deleteApi}>
+  ลบข้อมูลของเดือนนี้
+</Button>
     </div>
+   
+
   );
+
+
 }
+
 
 export default SelectStatement;
