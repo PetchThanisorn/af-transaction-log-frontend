@@ -182,16 +182,12 @@ function Home() {
     console.log(list);
   }, [list]);
 
-
-
-  
-
   return (
     <div className="home">
       <div>
         <input
           id="upload-input"
-          style={{ display: "none" }}
+          style={{ display: file.name }}
           type="file"
           onChange={readCSVFile}
         ></input>
@@ -211,11 +207,7 @@ function Home() {
         {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
       </div>
       <div>
-      <Button icon={<UploadOutlined />} onClick={() => {
-            insertApi().then(() => {
-              setCount(count + 1); // Increase count by 1 on successful insertApi
-            });
-          }}>
+        <Button icon={<UploadOutlined />} onClick={insertApi}>
           Upload Statement
         </Button>
         

@@ -172,11 +172,7 @@ function SelectStatement() {
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
       </div>
-        
-
-      <Button icon={<DeleteTwoTone />} onClick={deleteApi}>
-  ลบข้อมูลของเดือนนี้
-</Button>
+    
     </div>
    
 
