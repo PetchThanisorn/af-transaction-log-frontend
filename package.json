@@ -22,6 +22,7 @@
     "react-router-dom": "^6.13.0",
     "sass": "^1.63.4",
     "sweetalert2": "^11.7.12",
+    "sweetalert2-react-content": "^5.0.7",
     "windows-874": "^3.0.4"
   },
   "devDependencies": {

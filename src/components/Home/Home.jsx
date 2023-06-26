@@ -8,7 +8,7 @@ import { Button, message, Upload } from "antd";
 import { Space, Table, Tag } from "antd";
 import { encode, decode, labels } from "windows-874";
 import "./Home.css";
-
+import Swal from 'sweetalert2'
 function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
@@ -160,11 +160,13 @@ function Home() {
   }
 
   const inputFileElement = (e) => {
+ 
     console.log("Click");
     document.getElementById("upload-input").click();
   };
 
   const insertApi = async (e) => {
+    
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -174,9 +176,16 @@ function Home() {
       "http://127.0.0.1:3000/statement/insert",
       requestOptions
     );
-    const data = await response.json();
+    const data = await response.json();{
+      if(data["message"]=="OK"){
+      Swal.fire(
+        'เพิ่มข้อมูลเรียบร้อย',
+        'เพิ่มข้อมูล '+data["result"].length+" รายการ",
+        'success'
+      )
+    }
     console.log(data);
-  };
+  }};
 
   
 
@@ -194,39 +203,28 @@ function Home() {
           type="file"
           onChange={readCSVFile}
         ></input>
-  
-        <Button icon={<FileAddTwoTone />} onClick={inputFileElement}>
+
+        <Button icon={<FileAddTwoTone />} className="margin-right" onClick={inputFileElement}>
           เพิ่มไฟล์ CSV
         </Button>
-  
+
         <Button icon={<DeleteTwoTone />} onClick={() => {
           setList([]);
         }}>
           ล้างข้อมูลในตาราง
-      </Button>
-       
+        </Button>
+
       </div>
       <div>
         {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
       </div>
-      <div>
-      <Button icon={<UploadOutlined />} onClick={() => {
-            insertApi().then(() => {
-              setCount(count + 1); // Increase count by 1 on successful insertApi
-            });
-          }}>
+      <div style= {list.length == 0  ? {display : "none"} : null}>
+        <Button icon={<UploadOutlined />} onClick={() => {
+          insertApi()
+        }}>
           Upload Statement
         </Button>
-        
-        <Button
-          onClick={() => {
-            setCount(0);
-          }}
-        >
-          count is : {count}
-        </Button>
 
-       
       </div>
     </div>
   );

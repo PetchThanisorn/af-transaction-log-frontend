@@ -47,14 +47,12 @@ function App() {
               <div>ACC-Life Statement BBL</div>
               <ul className="nav-wrapper">
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/"  className="underlined">เพิ่มข้อมูล</Link>
                 </li>
                 <li>
-                  <Link to="/SelectStatement">Select Statement</Link>
+                  <Link to="/SelectStatement" className="underlined">ค้นหาหรือลบรายการ</Link>
                 </li>
-                <li>
-                  <Link to="/contact">Contact</Link>
-                </li>
+
               </ul>
             </Header>
             <Content style={contentStyle}>
