@@ -62,7 +62,7 @@ function SelectStatement() {
       console.log(value);
       years.push(key);
     }
-    setYear(years);
+    setYear(years.reverse());
     console.log(yearMonth);
   },[yearMonth])
 
@@ -206,8 +206,7 @@ function SelectStatement() {
       <Button
         onClick={(e) => {
           selectApi()
-        }} 
-        icon = {<SelectOutlined />}
+        }}
       >
         ค้นหา
       </Button>

@@ -176,21 +176,14 @@ function Home() {
       "http://127.0.0.1:3000/statement/insert",
       requestOptions
     );
-    const data = await response.json();{
-      if(data["message"]=="OK"){
-      Swal.fire(
-        'เพิ่มข้อมูลเรียบร้อย',
-        'เพิ่มข้อมูล '+data["result"].length+" รายการ",
-        'success'
-      )
-    }
+    const data = await response.json();
     console.log(data);
-  }};
+  };
 
   
 
   useEffect(() => {
-    console.log(list);
+   
   }, [list]);
 
 
@@ -225,7 +218,8 @@ function Home() {
         }}>
           บันทึกไฟล์เข้าสู่ระบบ
         </Button>
-
+       
+        
       </div>
     </div>
   );
