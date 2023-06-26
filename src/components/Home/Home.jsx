@@ -176,11 +176,10 @@ function Home() {
       requestOptions
     );
     const data = await response.json();
-    console.log(data);
   };
 
   useEffect(() => {
-    console.log(list);
+   
   }, [list]);
 
   return (
@@ -210,14 +209,8 @@ function Home() {
         <Button icon={<UploadOutlined />} onClick={insertApi}>
           Upload Statement
         </Button>
-        <> </>
-        <Button
-          onClick={() => {
-            setCount(0);
-          }}
-        >
-          count is : {count}
-        </Button>
+       
+        
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Select from "./components/SelectStatement/Select";
 import Home from "./components/Home/Home";
-import { Layout, Space, Button } from "antd";
-import { BrowserRouter as Router, Routes, Route , Link } from "react-router-dom";
+import { Layout, Space, Button,ConfigProvider } from "antd";
+import { Router, Routes, Route , Link , useLocation } from "react-router-dom";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -33,7 +33,14 @@ const footerStyle = {
 function App() {
  
   return (
-    <>
+    <ConfigProvider
+    theme={{
+      token: {
+        fontFamily:"Kanit",
+      },
+    }}
+  >
+    < div style={{fontFamily:"Kanit"}}>
       <Router>
         <Space
           direction="vertical"
@@ -50,10 +57,8 @@ function App() {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/SelectStatement">Select Statement</Link>
-                </li>
-                <li>
-                  <Link to="/contact">Contact</Link>
+                  <Link to="/SelectStatement">ค้นหา Statement</Link>
+                  <Button onClick={()=>{console.log(useLocation().pathname);}}>dawdawd</Button>
                 </li>
               </ul>
             </Header>
@@ -67,7 +72,9 @@ function App() {
           </Layout>
         </Space>
       </Router>
-    </>
+    </div>
+  </ConfigProvider>
+    
   );
 }
 
