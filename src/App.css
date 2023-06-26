@@ -76,5 +76,11 @@ li{
 li,a{
   color: white;
 }
+.underlined{
+  text-decoration: underline;
+  color: #e9e6dd;
+}
 
-
+.margin-right{
+  margin: 0px 10px 0px 0px
+}

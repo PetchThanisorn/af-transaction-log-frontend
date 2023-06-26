@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SelectOutlined, DeleteTwoTone, DownOutlined } from "@ant-design/icons";
+import { SelectOutlined, DeleteTwoTone } from "@ant-design/icons";
 import {
   Space,
   Table,
@@ -14,6 +14,12 @@ import {
 } from "antd";
 import Home from "../Home/Home";
 import "./Select.css";
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
 
 function SelectStatement() {
   const [month, setMonth] = useState([]);
@@ -111,12 +117,69 @@ function SelectStatement() {
       dataIndex: "terminalno",
       key: "terminalno",
     },
+
+  
+    
   ];
+  
+  const deleteApi = async () => {
+    
+    try {
+     
+      Swal.fire({
+        title: 'ยืนยันการลบข้อมูล',
+        text: "ข้อมูลที่ถูกลบไปไม่สามารถกู้คืนกลับมาได้",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ยืนยันลบข้อมูล',
+        cancelButtonText: 'ยกเลิก'
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ year: yearSelect, month: monthSelect }),
+          };
+          const response = await fetch(
+            "http://127.0.0.1:3000/statement/delete",
+            requestOptions
+          );
+          const data = await response.json();
+          if(data["message"]=="ok"){
+            if(data["rowsAffected"]>0){
+              Swal.fire(
+                'ลบข้อมูลเรียบร้อย',
+                'ลบข้อมูล '+data["rowsAffected"]+" รายการ",
+                'success'
+              ).then(() => {
+               setList([])
+              })
+            }else{
+              Swal.fire(
+                'ไม่พบข้อมูล',
+                'ไม่พบข้อมูล หรือ ถูกลบไปแล้ว',
+                'error'
+              ).then(() => {
+               setList([])
+              })
+            }
+          
+          }
+        }
+      })
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
 
   return (
     <div className="Select">
       <div>
-          <span>กรุณาเลือก ปี :</span>
+          <span className="margin-right">กรุณาเลือก ปี :</span>
       <Select
         style={{ width: 150, marginRight: 10 }}
         onChange={(value) => {
@@ -128,7 +191,7 @@ function SelectStatement() {
           value: year,
         }))}
       />
-      <span>เดือน :</span>
+      <span className="margin-right">เดือน :</span>
       <Select
         style={{ width: 200, marginRight: 10 }}
         onChange={(value) => {
@@ -139,22 +202,32 @@ function SelectStatement() {
           value: month.padStart(2, "0"),
         }))}
       />
-
+      <span style= {yearSelect.length == 0 || monthSelect.length== 0 ? {display : "none"} : null}>
       <Button
         onClick={(e) => {
           selectApi()
         }}
-        
       >
         ค้นหา
       </Button>
+      </span>
+     
       </div>
-      <div>
-      {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
+      <div style= {list.length == 0 ? {display : "none"} : null}>
+     <Table dataSource={list} columns={columns} /> 
       </div>
-    
+      <div style= {list.length == 0  ? {display : "none"} : null}>
+      <Button icon = {<DeleteTwoTone />} onClick={deleteApi}>
+        ลบข้อมูลของเดือนนี้
+        </Button>
+        </div>
     </div>
+   
+
   );
+
+
 }
+
 
 export default SelectStatement;

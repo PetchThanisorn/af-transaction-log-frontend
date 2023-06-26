@@ -54,12 +54,12 @@ function App() {
               <div>ACC-Life Statement BBL</div>
               <ul className="nav-wrapper">
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/"  className="underlined">เพิ่มข้อมูล</Link>
                 </li>
                 <li>
-                  <Link to="/SelectStatement">ค้นหา Statement</Link>
-                  <Button onClick={()=>{console.log(useLocation().pathname);}}>dawdawd</Button>
+                  <Link to="/SelectStatement" className="underlined">ค้นหาหรือลบรายการ</Link>
                 </li>
+
               </ul>
             </Header>
             <Content style={contentStyle}>
