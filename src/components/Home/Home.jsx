@@ -200,7 +200,8 @@ function Home() {
         <input
           id="upload-input"
           style={{ display: "none" }}
-          type="file"
+          type="file" 
+          accept=".csv"
           onChange={readCSVFile}
         ></input>
 
@@ -222,7 +223,7 @@ function Home() {
         <Button icon={<UploadOutlined />} onClick={() => {
           insertApi()
         }}>
-          Upload Statement
+          บันทึกไฟล์เข้าสู่ระบบ
         </Button>
 
       </div>
