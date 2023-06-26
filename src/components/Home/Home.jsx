@@ -6,7 +6,6 @@ import {
 } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Space, Table, Tag } from "antd";
-import { encode, decode, labels } from "windows-874";
 import "./Home.css";
 import Swal from 'sweetalert2'
 function Home() {

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState , react, useEffect } from "react";
 import "./App.css";
 import Select from "./components/SelectStatement/Select";
 import Home from "./components/Home/Home";
 import { Layout, Space, Button,ConfigProvider } from "antd";
-import { Router, Routes, Route , Link , useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route , Link , useLocation } from "react-router-dom";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -25,14 +25,18 @@ const footerStyle = {
   color: "#fff",
   backgroundColor: "#967E76",
   minHeight: "50px",
-  
 };
 
 
 
 function App() {
- 
-  return (
+  const [path , setPath] = useState("");
+
+  useEffect(()=>{
+
+    console.log(window.location.pathname);
+  },[])
+  return (dddd
     <ConfigProvider
     theme={{
       token: {
@@ -54,18 +58,22 @@ function App() {
               <div>ACC-Life Statement BBL</div>
               <ul className="nav-wrapper">
                 <li>
-                  <Link to="/"  className="underlined">เพิ่มข้อมูล</Link>
+                  <Link to="/"  className=" in-route">นำเข้าข้อมูล</Link>
                 </li>
                 <li>
-                  <Link to="/SelectStatement" className="underlined">ค้นหาหรือลบรายการ</Link>
+                  <Link  to="/SelectStatement" className="in-route" >ค้นหา หรือ ลบรายการ</Link>
                 </li>
 
               </ul>
             </Header>
             <Content style={contentStyle}>
+            <div></div>
+
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/SelectStatement" element={<Select />} />
+              {/* <Route path="/" element={<Home />} />
+                <Route path="/SelectStatement" element={<Select />} /> */}
+                <Route path="/" element={<div>dwdwd</div>} />
+                <Route path="/SelectStatement" element={<div>dwdwd</div>} />
               </Routes>
             </Content>
             <Footer className="footer" style={footerStyle}>ACC-LiFe Statement BBL</Footer>
