@@ -68,13 +68,17 @@
   list-style: none;
   margin: 0px 0px 0px 50px;
   
-  border-left: 2px solid white;
+  border-left: 2px solid #d7c0ae;
 }
 li{
-  margin: 0 1.5rem;
+  margin: 0 1rem;
 }
 li,a{
+  padding: 0px 10px 0px 10px;
   color: white;
+}
+.in-route{
+  background-color: #615a45;
 }
 .underlined{
   text-decoration: underline;
