@@ -54,7 +54,7 @@ function App() {
                   <Link to="/"  className="underlined">เพิ่มข้อมูล</Link>
                 </li>
                 <li>
-                  <Link to="/SelectStatement" className="underlined">ค้นหาหรือลบรายการ</Link>
+                  <Link to="/SelectStatement" className="underlined">ค้นหา หรือ ลบรายการ</Link>
                 </li>
 
               </ul>
