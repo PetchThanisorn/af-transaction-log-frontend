@@ -24,9 +24,11 @@ const MySwal = withReactContent(Swal)
 function SelectStatement() {
   const [month, setMonth] = useState([]);
   const [year, setYear] = useState([]);
+  const [accnos, setAccnos] = useState([]);
   const [monthSelect, setMonthSelect] = useState("");
   const [yearSelect, setYearSelect] = useState("");
   const [yearMonth, setyearMonth] = useState({});
+  const [accnoSelect, setAccnoselect] = useState("");
   const [list, setList] = useState([]);
   const monthStr = [
     "มกราคม",
@@ -56,7 +58,7 @@ function SelectStatement() {
     fetchData();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     let years = [];
     for (const [key, value] of Object.entries(yearMonth)) {
       console.log(value);
@@ -64,14 +66,32 @@ function SelectStatement() {
     }
     setYear(years.reverse());
     console.log(yearMonth);
-  },[yearMonth])
+  }, [yearMonth])
+
+  useEffect(() => {
+    if (yearSelect != "" && monthSelect != "") {
+      const fetchData = async () => {
+        const response = await fetch("http://127.0.0.1:3000/statement/getaccno", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ period: String(yearSelect) + String(monthSelect) }),
+        });
+        const result = await response.json();
+        console.log(result);
+        setAccnos(result['result']);
+      };
+      fetchData();
+      console.log("select", yearSelect, monthSelect)
+    }
+
+  }, [yearSelect, monthSelect])
 
   const selectApi = async (e) => {
-    let selected = yearSelect+ monthSelect;
+    let selected = yearSelect + monthSelect;
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ year: yearSelect, month: monthSelect,ascending:true }),
+      body: JSON.stringify({ year: yearSelect, month: monthSelect,accno:accnoSelect, ascending: true }),
     };
     const response = await fetch(
       "http://127.0.0.1:3000/statement/select",
@@ -119,10 +139,10 @@ function SelectStatement() {
       key: "terminalno",
     },
 
-  
-    
+
+
   ];
-  
+
   const deleteApi = async () => {
     try {
       Swal.fire({
@@ -134,26 +154,26 @@ function SelectStatement() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'ยืนยันลบข้อมูล',
         cancelButtonText: 'ยกเลิก'
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ year: yearSelect, month: monthSelect }),
+            body: JSON.stringify({ year: yearSelect, month: monthSelect ,accno:accnoSelect}),
           };
           const response = await fetch(
             "http://127.0.0.1:3000/statement/delete",
             requestOptions
           );
           const data = await response.json();
-          if(data["message"]=="ok"){
-            if(data["rowsAffected"]>0){
+          if (data["message"] == "ok") {
+            if (data["rowsAffected"] > 0) {
               Swal.fire(
                 'ลบข้อมูลเรียบร้อย',
-                'ลบข้อมูล '+data["rowsAffected"]+" รายการ",
+                'ลบข้อมูล ' + data["rowsAffected"] + " รายการ",
                 'success'
               ).then(() => {
-               setList([])
+                setList([])
               })
             } else {
               Swal.fire(
@@ -161,14 +181,14 @@ function SelectStatement() {
                 'ไม่พบข้อมูล หรือ ถูกลบไปแล้ว',
                 'error'
               ).then(() => {
-               setList([])
+                setList([])
               })
             }
-          
+
           }
         }
       })
-   
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -178,50 +198,61 @@ function SelectStatement() {
   return (
     <div className="Select">
       <div>
-          <span className="margin-right">กรุณาเลือก ปี :</span>
-      <Select
-        style={{ width: 150, marginRight: 10 }}
-        onChange={(value) => {
-          setYearSelect(value);
-          setMonth(yearMonth[value]);
-        }}
-        options={year.map((year) => ({
-          label: year,
-          value: year,
-        }))}
-      />
-      <span className="margin-right">เดือน :</span>
-      <Select
-        style={{ width: 200, marginRight: 10 }}
-        onChange={(value) => {
-          setMonthSelect(value);
-        }}
-        options={month.map((month) => ({
-          label: monthStr[month - 1] + " " + yearSelect + "/" + month,
-          value: month.padStart(2, "0"),
-        }))}
-      />
-      <span style= {yearSelect.length == 0 || monthSelect.length== 0 ? {display : "none"} : null}>
-      <Button
-        onClick={(e) => {
-          selectApi()
-        }}
-      >
-        ค้นหา
-      </Button>
-      </span>
-     
+        <span className="margin-right">กรุณาเลือก ปี :</span>
+        <Select
+          style={{ width: 150, marginRight: 10 }}
+          onChange={(value) => {
+            setYearSelect(value);
+            setMonth(yearMonth[value]);
+          }}
+          options={year.map((year) => ({
+            label: year,
+            value: year,
+          }))}
+        />
+        <span className="margin-right">เดือน :</span>
+        <Select
+          style={{ width: 200, marginRight: 10 }}
+          onChange={(value) => {
+            setMonthSelect(value);
+          }}
+          options={month.map((month) => ({
+            label: monthStr[month - 1] + " " + yearSelect + "/" + month,
+            value: month.padStart(2, "0"),
+          }))}
+        />
+        <span className="margin-right">เลขบัญชี:</span>
+        <Select
+          style={{ width: 200, marginRight: 10 }}
+          onChange={(value) => {
+            setAccnoselect(value);
+          }}
+          options={accnos.map((a) => ({
+            label: a["AccNo"],
+            value:a["AccNo"],
+          }))}
+        />
+        <span style={yearSelect.length == 0 || monthSelect.length == 0 || accnoSelect.length == 0 ? { display: "none" } : null}>
+          <Button
+            onClick={(e) => {
+              selectApi()
+            }}
+          >
+            ค้นหา
+          </Button>
+        </span>
+
       </div>
       <div >
-     <Table dataSource={list} columns={columns} /> 
+        <Table dataSource={list} columns={columns} />
       </div>
-      <div style= {list.length == 0  ? {display : "none"} : null}>
-      <Button icon = {<DeleteTwoTone />} onClick={deleteApi}>
-        ลบข้อมูลของเดือนนี้
+      <div style={list.length == 0 ? { display: "none" } : null}>
+        <Button icon={<DeleteTwoTone />} onClick={deleteApi}>
+          ลบข้อมูลของเดือนนี้
         </Button>
-        </div>
+      </div>
     </div>
-   
+
 
   );
 
