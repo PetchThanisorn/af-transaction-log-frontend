@@ -4,8 +4,21 @@ import {
   FileAddTwoTone,
   DeleteTwoTone,
 } from "@ant-design/icons";
-import { Button, message, Upload } from "antd";
-import { Space, Table, Tag } from "antd";
+import {
+  Button,
+  message,
+  Upload,
+  Space,
+  Table,
+  Tag,
+  Badge,
+  Statistic,
+  Card,
+  Row,
+  Col,
+} from "antd";
+import CountUp from "react-countup";
+import { FileTextFilled, FileAddOutlined } from "@ant-design/icons";
 import "./Home.css";
 import Swal from "sweetalert2";
 function Home() {
@@ -13,6 +26,24 @@ function Home() {
   const [accno, setAccno] = useState("");
   const [file, setFile] = useState("");
   const [files, setFiles] = useState([]);
+  const [Upload, setUpload] = useState(false);
+
+  const enterUpload = (index) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+    setTimeout(() => {
+
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+
+    }, 6000);
+  };
 
   const columns = [
     {
@@ -165,21 +196,43 @@ function Home() {
         }
       }
       if (accountNo == "") {
+        setFiles(files);
         Swal.fire({
           title: "ไม่พบข้อมูล เลขที่บัญชี",
           text: "โปรดตรวจสอบฟิลด์ข้อมูล Account No.",
           icon: "error",
         });
+        setFile(e.name);
         inputFileElementClear();
         addFileElementClear();
         return "";
+      } else {
+        if (files.length < 1) {
+          console.log("accNo has set.");
+          setAccno(accountNo);
+          setFile(e.name);
+          files.push(e);
+          setFiles(files);
+          const listStatement = list.concat(rows.reverse());
+          setList(listStatement);
+        } else {
+          if (accno != accountNo) {
+            Swal.fire({
+              title: "เลขที่บัญชีไม่ตรงกัน",
+              text: `ต้องเป็นเลขที่บัญชี ${accno} เท่านั้น`,
+              icon: "error",
+            });
+            console.log("not equals", files);
+            setFile(e.name);
+          } else {
+            setFile(e.name);
+            files.push(e);
+            setFiles(files);
+            const listStatement = list.concat(rows.reverse());
+            setList(listStatement);
+          }
+        }
       }
-
-      setFile(e.name);
-      files.push(e);
-      setFiles(files);
-      const listStatement = list.concat(rows.reverse());
-      setList(listStatement);
     };
   }
 
@@ -198,48 +251,101 @@ function Home() {
     document.getElementById("add-input").value = "";
   };
   const newFile = (e) => {
+    console.log(e.target.files[0]);
+    const filtered = files.filter((file) => {
+      return file["name"] == e.target.files[0].name;
+    });
+
     if (e.target.files[0].type != "text/csv") {
       Swal.fire({
         title: "รองรับไฟล์ CSV เท่านั้น",
         text: "โปรดอัพโหลดไฟล์ .csv เท่านั้น",
         icon: "error",
       });
-      inputFileElementClear();
-      addFileElementClear();
+
+      return "";
+    } else if (filtered.length > 0) {
+      Swal.fire({
+        title: "ข้อมูลถูกเพิ่มไปแล้ว",
+        text: "ไฟล์ " + e.target.files[0].name + " ถูกเพิ่มไปแล้ว",
+        icon: "error",
+      });
+
       return "";
     } else {
       setFiles([e.target.files[0]]);
     }
+    inputFileElementClear();
+    addFileElementClear();
   };
   const addFile = (e) => {
+    const filtered = files.filter((file) => {
+      return file["name"] == e.target.files[0].name;
+    });
     if (e.target.files[0].type != "text/csv") {
       Swal.fire({
         title: "รองรับไฟล์ CSV เท่านั้น",
         text: "โปรดอัพโหลดไฟล์ .csv เท่านั้น",
         icon: "error",
       });
-      inputFileElementClear();
-      addFileElementClear();
+      return "";
+    } else if (filtered.length > 0) {
+      Swal.fire({
+        title: "ข้อมูลถูกเพิ่มไปแล้ว",
+        text: "ไฟล์ " + e.target.files[0].name + " ถูกเพิ่มไปแล้ว",
+        icon: "error",
+      });
+
       return "";
     } else {
       let listFile = files.concat(e.target.files[0]);
-      console.log("list-file : ", listFile);
       setFiles(listFile);
     }
+    inputFileElementClear();
+    addFileElementClear();
   };
 
   const insertApi = async (e) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ file: "", data: list }),
-    };
-    const response = await fetch(
-      "http://127.0.0.1:3000/statement/insert",
-      requestOptions
-    );
-    const data = await response.json();
-    console.log(data);
+    Swal.fire({
+      title: "ยืนยันการเพิ่มข้อมูล",
+      text: "สามารถกลับไปตรวจสอบความถูกต้องก่อนอัพโหลดก่อนได้",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน , เพิ่มข้อมูล",
+      cancelButtonText: "ยกเลิก",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setUpload(true);
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ file: "", data: list }),
+        };
+        const response = await fetch(
+          "http://127.0.0.1:3000/statement/insert",
+          requestOptions
+        );
+        const data = await response.json();
+        if(data["message"] == "OK"){
+          setUpload(false);
+          setList([]);
+          setAccno("");
+          setFile("");
+          setFiles([]);
+          addFileElementClear();
+          inputFileElementClear();
+          Swal.fire({
+            title : "เพิ่มข้อมูล " + data["result"].length +" รายการ สำเร็จ",
+            text : "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ" ,
+            icon : "success"
+          })
+        }
+        
+        console.log(data);
+      }
+    });
   };
   const clearAll = () => {
     Swal.fire({
@@ -274,13 +380,13 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(files);
+    console.log("state : ", files);
     if (files.length > 0) {
       const lastFile = files.pop();
       readCSVFile(lastFile);
     }
   }, [files]);
-
+  const formatter = (value) => <CountUp end={value} separator="," />;
   return (
     <div className="home">
       <div>
@@ -289,21 +395,28 @@ function Home() {
           style={{ display: "none" }}
           type="file"
           onChange={newFile}
+          accept=".csv"
         ></input>
         <input
           id="add-input"
           style={{ display: "none" }}
           type="file"
           onChange={addFile}
+          accept=".csv"
         ></input>
-
-        <Button
-          icon={<FileAddTwoTone />}
-          className="margin-right"
-          onClick={inputFileElement}
-        >
-          {accno == "" ? "เพิ่มไฟล์ CSV" : "เปลี่ยนไฟล์ CSV"}
-        </Button>
+        {accno == "" ? (
+          <Button
+            icon={<FileAddTwoTone />}
+            className="margin-right"
+            onClick={inputFileElement}
+          >
+            เพิ่มไฟล์ CSV
+          </Button>
+        ) : (
+          <Button icon={<DeleteTwoTone />} onClick={clearAll}>
+            ล้างข้อมูลทั้งหมด
+          </Button>
+        )}
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
         <div style={{ fontSize: "20px", textAlign: "left" }}>
@@ -314,22 +427,47 @@ function Home() {
                 {files.map((e, i) => (
                   <Tag
                     key={i}
-                    color="green"
+                    bordered={false}
+                    color="blue"
                     style={{ padding: "10px", fontSize: "18px" }}
                     onClose={() => {
                       removeSelected(i);
                     }}
                   >
+                    <FileTextFilled />
                     <span>{e.name}</span>
                   </Tag>
                 ))}
-                <Button onClick={addFileElement}>เพิ่มข้อมูล CSV</Button>
+                <Button onClick={addFileElement}>
+                  <FileAddOutlined />
+                  เพิ่มข้อมูล CSV
+                </Button>
               </Space>
             </span>
           </div>
-          <span style={{ marginRight: "10px" }}>เลขที่บัญชี : {accno} </span>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Card size="small">
+                <Statistic title="เลขที่บัญชี" value={accno} precision={2} />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card size="small">
+                <Statistic
+                  title="จำนวนรายการ"
+                  value={list.length}
+                  precision={2}
+                  formatter={formatter}
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+             
+            </Col>
+          </Row>
         </div>
         <Table
+          style={{marginTop:"30px"}}
           dataSource={list}
           columns={columns}
           size="small"
@@ -339,15 +477,12 @@ function Home() {
         <Button
           style={{ marginRight: "20px" }}
           icon={<UploadOutlined />}
+          loading = {Upload}
           onClick={() => {
             insertApi();
           }}
         >
-          บันทึกไฟล์เข้าสู่ระบบ
-        </Button>
-
-        <Button icon={<DeleteTwoTone />} onClick={clearAll}>
-          ล้างข้อมูลทั้งหมด
+          บันทึกไฟล์เข้าสู่ระบบ 
         </Button>
       </div>
     </div>

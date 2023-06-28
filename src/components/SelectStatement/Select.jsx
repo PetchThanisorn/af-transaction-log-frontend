@@ -78,6 +78,7 @@ function SelectStatement() {
       requestOptions
     );
     const data = await response.json();
+    console.log(data["result"]);
     setList(data["result"])
     console.log(data);
   };
@@ -123,9 +124,7 @@ function SelectStatement() {
   ];
   
   const deleteApi = async () => {
-    
     try {
-     
       Swal.fire({
         title: 'ยืนยันการลบข้อมูล',
         text: "ข้อมูลที่ถูกลบไปไม่สามารถกู้คืนกลับมาได้",
@@ -156,7 +155,7 @@ function SelectStatement() {
               ).then(() => {
                setList([])
               })
-            }else{
+            } else {
               Swal.fire(
                 'ไม่พบข้อมูล',
                 'ไม่พบข้อมูล หรือ ถูกลบไปแล้ว',
@@ -169,7 +168,7 @@ function SelectStatement() {
           }
         }
       })
-      console.log(data);
+   
     } catch (error) {
       console.error("Error:", error);
     }
@@ -213,7 +212,7 @@ function SelectStatement() {
       </span>
      
       </div>
-      <div style= {list.length == 0 ? {display : "none"} : null}>
+      <div >
      <Table dataSource={list} columns={columns} /> 
       </div>
       <div style= {list.length == 0  ? {display : "none"} : null}>
