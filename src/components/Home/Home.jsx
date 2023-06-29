@@ -451,6 +451,7 @@ function Home() {
             <Col span={8}></Col>
           </Row>
         </div>
+        
         <Table
           style={{ marginTop: "30px" }}
           dataSource={list}
