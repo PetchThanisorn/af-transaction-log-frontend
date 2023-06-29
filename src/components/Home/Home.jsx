@@ -126,7 +126,6 @@ function Home() {
           //หัวตาราง
           if (isHeaderRow["headerRow"] == row && col != rowColData.length - 1) {
             let colHeader = rowColData[col].replace(/\s|\./g, "");
-            console.log(colHeader.toLowerCase());
             rowsHeaderName.push(colHeader.toLowerCase());
           }
           //ตาราง
@@ -154,7 +153,6 @@ function Home() {
               rowStatement["key"] = Math.abs(
                 row + list.length - start
               ).toString();
-              console.log(rowStatement["key"]);
               rows.push(rowStatement);
               rowStatement = {};
             }
@@ -191,7 +189,6 @@ function Home() {
         return "";
       } else {
         if (files.length < 1) {
-          console.log("accNo has set.");
           setAccno(accountNo);
           setFile(e.name);
           files.push(e);
@@ -205,7 +202,6 @@ function Home() {
               text: `ต้องเป็นเลขที่บัญชี ${accno} เท่านั้น`,
               icon: "error",
             });
-            console.log("not equals", files);
             setFile(e.name);
           } else {
             setFile(e.name);
@@ -220,21 +216,18 @@ function Home() {
   }
 
   const inputFileElement = (e) => {
-    console.log("Click");
     document.getElementById("upload-input").click();
   };
   const inputFileElementClear = () => {
     document.getElementById("upload-input").value = "";
   };
   const addFileElement = (e) => {
-    console.log("Click");
     document.getElementById("add-input").click();
   };
   const addFileElementClear = (e) => {
     document.getElementById("add-input").value = "";
   };
   const newFile = (e) => {
-    console.log(e.target.files[0]);
     const filtered = files.filter((file) => {
       return file["name"] == e.target.files[0].name;
     });
@@ -320,13 +313,11 @@ function Home() {
           addFileElementClear();
           inputFileElementClear();
           Swal.fire({
-            title : "เพิ่มข้อมูล " + data["result"].length +" รายการ สำเร็จ",
-            text : "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ" ,
-            icon : "success"
-          })
+            title: "เพิ่มข้อมูล " + data["result"].length + " รายการ สำเร็จ",
+            text: "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ",
+            icon: "success",
+          });
         }
-        
-        console.log(data);
       }
     });
   };
@@ -351,19 +342,13 @@ function Home() {
       }
     });
   };
-  useEffect(
-    (e) => {
-      console.log(list, file);
-    },
-    [list, file]
-  );
+
   const removeSelected = (e) => {
     files.splice(e, 1);
     setFiles(files);
   };
 
   useEffect(() => {
-    console.log("state : ", files);
     if (files.length > 0) {
       const lastFile = files.pop();
       readCSVFile(lastFile);
@@ -392,13 +377,20 @@ function Home() {
             icon={<FileAddTwoTone />}
             className="margin-right"
             onClick={inputFileElement}
+            size="large"
           >
             เพิ่มไฟล์ CSV
           </Button>
         ) : (
-          <Button icon={<DeleteTwoTone />} onClick={clearAll}>
-            ล้างข้อมูลทั้งหมด
-          </Button>
+          <div>
+            <Button onClick={addFileElement} style={{marginRight:"20px"}}>
+              <FileAddOutlined />
+              เพิ่มข้อมูล CSV
+            </Button>
+            <Button icon={<DeleteTwoTone />} onClick={clearAll}>
+              ล้างข้อมูลทั้งหมด
+            </Button>
+          </div>
         )}
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
@@ -421,10 +413,6 @@ function Home() {
                     <span>{e.name}</span>
                   </Tag>
                 ))}
-                <Button onClick={addFileElement}>
-                  <FileAddOutlined />
-                  เพิ่มข้อมูล CSV
-                </Button>
               </Space>
             </span>
           </div>
@@ -444,13 +432,11 @@ function Home() {
                 />
               </Card>
             </Col>
-            <Col span={8}>
-             
-            </Col>
+            <Col span={8}></Col>
           </Row>
         </div>
         <Table
-          style={{marginTop:"30px"}}
+          style={{ marginTop: "30px" }}
           dataSource={list}
           columns={columns}
           size="small"
@@ -460,12 +446,12 @@ function Home() {
         <Button
           style={{ marginRight: "20px" }}
           icon={<UploadOutlined />}
-          loading = {Upload}
+          loading={Upload}
           onClick={() => {
             insertApi();
           }}
         >
-          บันทึกไฟล์เข้าสู่ระบบ 
+          บันทึกไฟล์เข้าสู่ระบบ
         </Button>
       </div>
     </div>

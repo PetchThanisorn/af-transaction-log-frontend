@@ -71,6 +71,7 @@ button:focus-visible {
 body{
   margin: 0;
   font-family: 'Kanit' !important;
+  background-color:rgb(197 223 255)
 }
 .swal2-styled{
   font-family: 'Kanit' !important;

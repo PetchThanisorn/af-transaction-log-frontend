@@ -10,7 +10,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
-
+import { FileAddOutlined , FileSearchOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 
 const contentStyle = {
@@ -18,18 +18,13 @@ const contentStyle = {
   minHeight: `calc(100vh - 137px)`,
   lineHeight: "75px",
   color: "#120338",
-  backgroundColor: "#D7C0AE",
-};
-const siderStyle = {
-  textAlign: "center",
-  lineHeight: "50px",
-  color: "#fff",
-  backgroundColor: "#fff",
+  backgroundColor: "rgb(197 223 255)",
+  padding:"20px 0px 0px 0px",
 };
 const footerStyle = {
   textAlign: "center",
   color: "#fff",
-  backgroundColor: "#967E76",
+  backgroundColor: "rgb(197 223 255)",
   minHeight: "50px",
 };
 
@@ -53,29 +48,38 @@ function App() {
           >
             <Layout>
               <Header className="header">
-                <div>ACC-Life Statement BBL</div>
+                <div>
+                ACC-Life Statement BBL
+                </div>
                 <ul className="nav-wrapper">
                   <li>
-                  
                     <Link to="/" className="underlined">
-                      เพิ่มข้อมูล
+                    <Button className="nav-button" type="text" shape="round" size="large" icon={<FileAddOutlined /> }>
+                     เพิ่มข้อมูล
+                    </Button>
                     </Link>
                   </li>
                   <li>
                     <Link to="/SelectStatement" className="underlined">
-                      ค้นหา หรือ ลบรายการ
+                    <Button className="nav-button" type="text" shape="round" size="large" icon={<FileSearchOutlined /> } >
+                    ค้นหา หรือ ลบรายการ
+                    </Button>
+                      
                     </Link>
                   </li>
                 </ul>
               </Header>
               <Content style={contentStyle}>
-                <Routes>
+                <div style={{backgroundColor:"#f8f9fa",margin:"0px 40px 0px 40px",padding:"0px 0px 30px 0px",minHeight:"600px",border:"0px solid",borderRadius:"20px"}}>
+                  <Routes >
                   <Route path="/" element={<Home />} />
                   <Route path="/SelectStatement" element={<Select />} />
                 </Routes>
+                </div>
+                
               </Content>
               <Footer className="footer" style={footerStyle}>
-                ACC-LiFe Statement BBL
+                ACC-Life Statement BBL
               </Footer>
             </Layout>
           </Space>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SelectOutlined, DeleteTwoTone } from "@ant-design/icons";
+import { SelectOutlined, DeleteTwoTone ,SearchOutlined } from "@ant-design/icons";
 import {
   Space,
   Table,
@@ -59,11 +59,9 @@ function SelectStatement() {
   useEffect(() => {
     let years = [];
     for (const [key, value] of Object.entries(yearMonth)) {
-      console.log(value);
       years.push(key);
     }
     setYear(years.reverse());
-    console.log(yearMonth);
   }, [yearMonth]);
 
   useEffect(() => {
@@ -80,11 +78,9 @@ function SelectStatement() {
           }
         );
         const result = await response.json();
-        console.log(result);
         setAccnos(result["result"]);
       };
       fetchData();
-      console.log("select", yearSelect, monthSelect);
     }
   
   }, [yearSelect, monthSelect]);
@@ -110,9 +106,7 @@ function SelectStatement() {
     );
 
     const data = await response.json();
-    console.log(data["result"]);
     setList(data["result"]);
-    console.log(data);
   };
   const columns = [
     {
@@ -259,6 +253,7 @@ function SelectStatement() {
           }
         >
           <Button
+          icon={<SearchOutlined />}
             onClick={(e) => {
               selectApi();
             }}
@@ -278,7 +273,7 @@ function SelectStatement() {
         />
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
-        <Button icon={<DeleteTwoTone />} onClick={deleteApi}>
+        <Button icon={<DeleteTwoTone />} size="large" onClick={deleteApi}>
           ลบข้อมูลของเดือนนี้
         </Button>
       </div>
