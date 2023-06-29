@@ -28,26 +28,6 @@ function Home() {
   const [files, setFiles] = useState([]);
   const [Upload, setUpload] = useState(false);
 
-<<<<<<< HEAD
-  const enterUpload = (index) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-    setTimeout(() => {
-
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-
-    }, 6000);
-  };
-
-=======
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const columns = [
     {
       title: "Trans Date",
@@ -227,10 +207,6 @@ function Home() {
             });
             console.log("not equals", files);
             setFile(e.name);
-<<<<<<< HEAD
-=======
-      
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           } else {
             setFile(e.name);
             files.push(e);
@@ -331,19 +307,11 @@ function Home() {
           body: JSON.stringify({ file: "", data: list }),
         };
         const response = await fetch(
-<<<<<<< HEAD
-          "http://127.0.0.1:3000/statement/insert",
-          requestOptions
-        );
-        const data = await response.json();
-        if(data["message"] == "OK"){
-=======
           `${import.meta.env.VITE_API_URL}/statement/insert`,
           requestOptions
         );
         const data = await response.json();
         if (data["message"] == "OK") {
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           setUpload(false);
           setList([]);
           setAccno("");
@@ -352,21 +320,12 @@ function Home() {
           addFileElementClear();
           inputFileElementClear();
           Swal.fire({
-<<<<<<< HEAD
             title : "เพิ่มข้อมูล " + data["result"].length +" รายการ สำเร็จ",
             text : "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ" ,
             icon : "success"
           })
         }
         
-=======
-            title: "เพิ่มข้อมูล " + data["result"].length + " รายการ สำเร็จ",
-            text: "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ",
-            icon: "success",
-          });
-        }
-
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         console.log(data);
       }
     });
@@ -392,38 +351,24 @@ function Home() {
       }
     });
   };
-<<<<<<< HEAD
   useEffect(
     (e) => {
       console.log(list, file);
     },
     [list, file]
   );
-=======
-
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const removeSelected = (e) => {
     files.splice(e, 1);
     setFiles(files);
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     console.log("state : ", files);
-=======
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
     if (files.length > 0) {
       const lastFile = files.pop();
       readCSVFile(lastFile);
     }
   }, [files]);
-<<<<<<< HEAD
-=======
-  useEffect(()=>{
-    setFile("");
-  },[file])
-
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const formatter = (value) => <CountUp end={value} separator="," />;
   return (
     <div className="home">
