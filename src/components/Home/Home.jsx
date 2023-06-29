@@ -28,23 +28,6 @@ function Home() {
   const [files, setFiles] = useState([]);
   const [Upload, setUpload] = useState(false);
 
-  const enterUpload = (index) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-    setTimeout(() => {
-
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-
-    }, 6000);
-  };
-
   const columns = [
     {
       title: "Trans Date",
@@ -324,7 +307,7 @@ function Home() {
           body: JSON.stringify({ file: "", data: list }),
         };
         const response = await fetch(
-          "http://127.0.0.1:3000/statement/insert",
+          `${import.meta.env.VITE_API_URL}/statement/insert`,
           requestOptions
         );
         const data = await response.json();
@@ -368,24 +351,19 @@ function Home() {
       }
     });
   };
-  useEffect(
-    (e) => {
-      console.log(list, file);
-    },
-    [list, file]
-  );
+
   const removeSelected = (e) => {
     files.splice(e, 1);
     setFiles(files);
   };
 
   useEffect(() => {
-    console.log("state : ", files);
     if (files.length > 0) {
       const lastFile = files.pop();
       readCSVFile(lastFile);
     }
   }, [files]);
+
   const formatter = (value) => <CountUp end={value} separator="," />;
   return (
     <div className="home">

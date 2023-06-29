@@ -45,7 +45,7 @@ function SelectStatement() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://127.0.0.1:3000/statement/period", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/statement/period`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
@@ -74,7 +74,7 @@ function SelectStatement() {
       body: JSON.stringify({ year: yearSelect, month: monthSelect,ascending:true }),
     };
     const response = await fetch(
-      "http://127.0.0.1:3000/statement/select",
+      `${import.meta.env.VITE_API_URL}/statement/select`,
       requestOptions
     );
     const data = await response.json();
@@ -142,7 +142,7 @@ function SelectStatement() {
             body: JSON.stringify({ year: yearSelect, month: monthSelect }),
           };
           const response = await fetch(
-            "http://127.0.0.1:3000/statement/delete",
+            `${import.meta.env.VITE_API_URL}/statement/delete`,
             requestOptions
           );
           const data = await response.json();
