@@ -451,24 +451,9 @@ function Home() {
             เพิ่มไฟล์ CSV
           </Button>
         ) : (
-<<<<<<< HEAD
           <Button icon={<DeleteTwoTone />} onClick={clearAll}>
             ล้างข้อมูลทั้งหมด
           </Button>
-=======
-          <div>
-            <Button icon={<FileAddTwoTone />} onClick={addFileElement}>
-              เพิ่มข้อมูล CSV
-            </Button>
-            <Button
-              icon={<DeleteTwoTone />}
-              onClick={clearAll}
-              style={{ marginLeft: "10px" }}
-            >
-              ล้างข้อมูลทั้งหมด
-            </Button>
-          </div>
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         )}
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
@@ -491,13 +476,10 @@ function Home() {
                     <span>{e.name}</span>
                   </Tag>
                 ))}
-<<<<<<< HEAD
                 <Button onClick={addFileElement}>
                   <FileAddOutlined />
                   เพิ่มข้อมูล CSV
                 </Button>
-=======
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
               </Space>
             </span>
           </div>
@@ -517,7 +499,6 @@ function Home() {
                 />
               </Card>
             </Col>
-<<<<<<< HEAD
             <Col span={8}>
              
             </Col>
@@ -530,38 +511,16 @@ function Home() {
           size="small"
           pagination={{ pageSize: 1000 }}
           bordered
-=======
-            <Col span={8}></Col>
-          </Row>
-        </div>
-        
-        <Table
-          style={{ marginTop: "30px" }}
-          dataSource={list}
-          columns={columns}
-          size="small"
-          bordered
-          pagination={{ pageSize: 1000 }}
-          
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         />
         <Button
           style={{ marginRight: "20px" }}
           icon={<UploadOutlined />}
-<<<<<<< HEAD
           loading = {Upload}
-=======
-          loading={Upload}
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           onClick={() => {
             insertApi();
           }}
         >
-<<<<<<< HEAD
           บันทึกไฟล์เข้าสู่ระบบ 
-=======
-          บันทึกไฟล์เข้าสู่ระบบ
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         </Button>
       </div>
     </div>
