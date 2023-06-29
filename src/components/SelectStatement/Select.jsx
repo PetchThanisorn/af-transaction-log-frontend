@@ -28,6 +28,8 @@ function SelectStatement() {
   const [yearSelect, setYearSelect] = useState("");
   const [yearMonth, setyearMonth] = useState({});
   const [list, setList] = useState([]);
+  const [query, SetQuery] = useState([]);
+  
   const monthStr = [
     "มกราคม",
     "กุมภาพันธ์",
@@ -175,11 +177,10 @@ function SelectStatement() {
     }
   };
 
-
   return (
     <div className="Select">
       <div>
-          <span className="margin-right">กรุณาเลือก ปี :</span>
+      <span className="margin-right">กรุณาเลือก ปี :</span>
       <Select
         style={{ width: 150, marginRight: 10 }}
         onChange={(value) => {
@@ -202,6 +203,17 @@ function SelectStatement() {
           value: month.padStart(2, "0"),
         }))}
       />
+
+      <span className="margin-right">ใส่Accที่ต้องการหา :</span>
+      <span>
+      <input type="search"  
+      placeholder={'hi'.length === 2 ? 'AccounNo... ' : placeholder }
+      className="search" 
+      onChange={(e) => SetQuery(e.target.value)} 
+      />
+      </span>
+
+      <> </>
       <span style= {yearSelect.length == 0 || monthSelect.length== 0 ? {display : "none"} : null}>
       <Button
         onClick={(e) => {
@@ -211,11 +223,13 @@ function SelectStatement() {
         ค้นหา
       </Button>
       </span>
-     
+      <> </>
+      
       </div>
       <div style= {list.length == 0 ? {display : "none"} : null}>
      <Table dataSource={list} columns={columns} /> 
       </div>
+      
       <div style= {list.length == 0  ? {display : "none"} : null}>
       <Button icon = {<DeleteTwoTone />} onClick={deleteApi}>
         ลบข้อมูลของเดือนนี้

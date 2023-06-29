@@ -7,13 +7,17 @@ import {
 import { Button, message, Upload } from "antd";
 import { Space, Table, Tag } from "antd";
 import "./Home.css";
-import Swal from 'sweetalert2'
+
+
+
 function Home() {
   const [file, setFile] = useState([]);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
 
+
   const columns = [
+    
     {
       title: "Trans Date",
       dataIndex: "transdate",
@@ -172,7 +176,7 @@ function Home() {
       body: JSON.stringify({ file: "", data: list }),
     };
     const response = await fetch(
-      "http://127.0.0.1:3000/statement/insert",
+      "http://127.0.0.1:3000/statement/insert", 
       requestOptions
     );
     const data = await response.json();
@@ -185,19 +189,21 @@ function Home() {
    
   }, [list]);
 
-
+  
   return (
     <div className="home">
-      {/* <div>
+      <div>
         <input
           id="upload-input"
           style={{ display: "none" }}
           type="file" 
-       
+          
           onChange={readCSVFile}
         ></input>
-
-        <Button icon={<FileAddTwoTone />} className="margin-right" onClick={inputFileElement}>
+        
+        
+        
+        <Button icon={<FileAddTwoTone />}  className="margin-right" onClick={inputFileElement}>
           เพิ่มไฟล์ CSV
         </Button>
 
@@ -209,7 +215,8 @@ function Home() {
 
       </div>
       <div>
-        {list.length == 0 ? "" : <Table dataSource={list} columns={columns} />}
+        {list.length ==  0 ? "" :   <Table dataSource={list} columns={columns} />}
+        
       </div>
       <div style= {list.length == 0  ? {display : "none"} : null}>
         <Button icon={<UploadOutlined />} onClick={() => {
@@ -219,7 +226,7 @@ function Home() {
         </Button>
        
         
-      </div> */}
+      </div>
     </div>
   );
 }
