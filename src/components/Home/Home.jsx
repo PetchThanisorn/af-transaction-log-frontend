@@ -28,6 +28,7 @@ function Home() {
   const [files, setFiles] = useState([]);
   const [Upload, setUpload] = useState(false);
 
+<<<<<<< HEAD
   const enterUpload = (index) => {
     setLoadings((prevLoadings) => {
       const newLoadings = [...prevLoadings];
@@ -45,6 +46,8 @@ function Home() {
     }, 6000);
   };
 
+=======
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const columns = [
     {
       title: "Trans Date",
@@ -224,6 +227,10 @@ function Home() {
             });
             console.log("not equals", files);
             setFile(e.name);
+<<<<<<< HEAD
+=======
+      
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           } else {
             setFile(e.name);
             files.push(e);
@@ -324,11 +331,19 @@ function Home() {
           body: JSON.stringify({ file: "", data: list }),
         };
         const response = await fetch(
+<<<<<<< HEAD
           "http://127.0.0.1:3000/statement/insert",
           requestOptions
         );
         const data = await response.json();
         if(data["message"] == "OK"){
+=======
+          `${import.meta.env.VITE_API_URL}/statement/insert`,
+          requestOptions
+        );
+        const data = await response.json();
+        if (data["message"] == "OK") {
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           setUpload(false);
           setList([]);
           setAccno("");
@@ -337,12 +352,21 @@ function Home() {
           addFileElementClear();
           inputFileElementClear();
           Swal.fire({
+<<<<<<< HEAD
             title : "เพิ่มข้อมูล " + data["result"].length +" รายการ สำเร็จ",
             text : "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ" ,
             icon : "success"
           })
         }
         
+=======
+            title: "เพิ่มข้อมูล " + data["result"].length + " รายการ สำเร็จ",
+            text: "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ",
+            icon: "success",
+          });
+        }
+
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         console.log(data);
       }
     });
@@ -368,24 +392,38 @@ function Home() {
       }
     });
   };
+<<<<<<< HEAD
   useEffect(
     (e) => {
       console.log(list, file);
     },
     [list, file]
   );
+=======
+
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const removeSelected = (e) => {
     files.splice(e, 1);
     setFiles(files);
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     console.log("state : ", files);
+=======
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
     if (files.length > 0) {
       const lastFile = files.pop();
       readCSVFile(lastFile);
     }
   }, [files]);
+<<<<<<< HEAD
+=======
+  useEffect(()=>{
+    setFile("");
+  },[file])
+
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
   const formatter = (value) => <CountUp end={value} separator="," />;
   return (
     <div className="home">
@@ -413,9 +451,24 @@ function Home() {
             เพิ่มไฟล์ CSV
           </Button>
         ) : (
+<<<<<<< HEAD
           <Button icon={<DeleteTwoTone />} onClick={clearAll}>
             ล้างข้อมูลทั้งหมด
           </Button>
+=======
+          <div>
+            <Button icon={<FileAddTwoTone />} onClick={addFileElement}>
+              เพิ่มข้อมูล CSV
+            </Button>
+            <Button
+              icon={<DeleteTwoTone />}
+              onClick={clearAll}
+              style={{ marginLeft: "10px" }}
+            >
+              ล้างข้อมูลทั้งหมด
+            </Button>
+          </div>
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         )}
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
@@ -438,10 +491,13 @@ function Home() {
                     <span>{e.name}</span>
                   </Tag>
                 ))}
+<<<<<<< HEAD
                 <Button onClick={addFileElement}>
                   <FileAddOutlined />
                   เพิ่มข้อมูล CSV
                 </Button>
+=======
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
               </Space>
             </span>
           </div>
@@ -461,6 +517,7 @@ function Home() {
                 />
               </Card>
             </Col>
+<<<<<<< HEAD
             <Col span={8}>
              
             </Col>
@@ -473,16 +530,37 @@ function Home() {
           size="small"
           pagination={{ pageSize: 1000 }}
           bordered
+=======
+            <Col span={8}></Col>
+          </Row>
+        </div>
+        <Table
+          style={{ marginTop: "30px" }}
+          dataSource={list}
+          columns={columns}
+          size="small"
+          bordered
+          pagination={{ pageSize: 1000 }}
+          
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         />
         <Button
           style={{ marginRight: "20px" }}
           icon={<UploadOutlined />}
+<<<<<<< HEAD
           loading = {Upload}
+=======
+          loading={Upload}
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
           onClick={() => {
             insertApi();
           }}
         >
+<<<<<<< HEAD
           บันทึกไฟล์เข้าสู่ระบบ 
+=======
+          บันทึกไฟล์เข้าสู่ระบบ
+>>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
         </Button>
       </div>
     </div>
