@@ -207,6 +207,7 @@ function Home() {
             });
             console.log("not equals", files);
             setFile(e.name);
+      
           } else {
             setFile(e.name);
             files.push(e);
@@ -311,7 +312,7 @@ function Home() {
           requestOptions
         );
         const data = await response.json();
-        if(data["message"] == "OK"){
+        if (data["message"] == "OK") {
           setUpload(false);
           setList([]);
           setAccno("");
@@ -320,12 +321,12 @@ function Home() {
           addFileElementClear();
           inputFileElementClear();
           Swal.fire({
-            title : "เพิ่มข้อมูล " + data["result"].length +" รายการ สำเร็จ",
-            text : "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ" ,
-            icon : "success"
-          })
+            title: "เพิ่มข้อมูล " + data["result"].length + " รายการ สำเร็จ",
+            text: "สามารถตรวจสอบข้อมูลจากหน้า ค้นหา หรือ ลบรายการ",
+            icon: "success",
+          });
         }
-        
+
         console.log(data);
       }
     });
@@ -363,6 +364,9 @@ function Home() {
       readCSVFile(lastFile);
     }
   }, [files]);
+  useEffect(()=>{
+    setFile("");
+  },[file])
 
   const formatter = (value) => <CountUp end={value} separator="," />;
   return (
@@ -391,9 +395,18 @@ function Home() {
             เพิ่มไฟล์ CSV
           </Button>
         ) : (
-          <Button icon={<DeleteTwoTone />} onClick={clearAll}>
-            ล้างข้อมูลทั้งหมด
-          </Button>
+          <div>
+            <Button icon={<FileAddTwoTone />} onClick={addFileElement}>
+              เพิ่มข้อมูล CSV
+            </Button>
+            <Button
+              icon={<DeleteTwoTone />}
+              onClick={clearAll}
+              style={{ marginLeft: "10px" }}
+            >
+              ล้างข้อมูลทั้งหมด
+            </Button>
+          </div>
         )}
       </div>
       <div style={list.length == 0 ? { display: "none" } : null}>
@@ -416,10 +429,6 @@ function Home() {
                     <span>{e.name}</span>
                   </Tag>
                 ))}
-                <Button onClick={addFileElement}>
-                  <FileAddOutlined />
-                  เพิ่มข้อมูล CSV
-                </Button>
               </Space>
             </span>
           </div>
@@ -439,28 +448,27 @@ function Home() {
                 />
               </Card>
             </Col>
-            <Col span={8}>
-             
-            </Col>
+            <Col span={8}></Col>
           </Row>
         </div>
         <Table
-          style={{marginTop:"30px"}}
+          style={{ marginTop: "30px" }}
           dataSource={list}
           columns={columns}
           size="small"
-          pagination={{ pageSize: 1000 }}
           bordered
+          pagination={{ pageSize: 1000 }}
+          
         />
         <Button
           style={{ marginRight: "20px" }}
           icon={<UploadOutlined />}
-          loading = {Upload}
+          loading={Upload}
           onClick={() => {
             insertApi();
           }}
         >
-          บันทึกไฟล์เข้าสู่ระบบ 
+          บันทึกไฟล์เข้าสู่ระบบ
         </Button>
       </div>
     </div>
