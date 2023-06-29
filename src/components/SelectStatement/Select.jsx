@@ -269,56 +269,6 @@ function SelectStatement() {
       </div>
       
       <div>
-<<<<<<< HEAD
-        <span className="margin-right">กรุณาเลือก ปี :</span>
-        <Select
-          style={{ width: 150, marginRight: 10 }}
-          onChange={(value) => {
-            setYearSelect(value);
-            setMonth(yearMonth[value]);
-          }}
-          options={year.map((year) => ({
-            label: year,
-            value: year,
-          }))}
-        />
-        <span className="margin-right">เดือน :</span>
-        <Select
-          style={{ width: 200, marginRight: 10 }}
-          onChange={(value) => {
-            setMonthSelect(value);
-          }}
-          options={month.map((month) => ({
-            label: monthStr[month - 1] + " " + yearSelect + "/" + month,
-            value: month.padStart(2, "0"),
-          }))}
-        />
-        <span className="margin-right">เลขบัญชี:</span>
-        <Select
-          style={{ width: 200, marginRight: 10 }}
-          onChange={(value) => {
-            setAccnoselect(value);
-          }}
-          options={accnos.map((a) => ({
-            label: a["AccNo"],
-            value:a["AccNo"],
-          }))}
-        />
-        <span style={yearSelect.length == 0 || monthSelect.length == 0 || accnoSelect.length == 0 ? { display: "none" } : null}>
-          <Button
-            onClick={(e) => {
-              selectApi()
-            }}
-          >
-            ค้นหา
-          </Button>
-        </span>
-
-      </div>
-      <div >
-        <Table dataSource={list} columns={columns} />
-      </div>
-=======
         <Table
           dataSource={list}
           columns={columns}
@@ -327,7 +277,6 @@ function SelectStatement() {
           pagination={{ pageSize: 1000 }}
         />
       </div>
->>>>>>> cfdff3860395c20480d6e5b4f79848be95c9b99e
       <div style={list.length == 0 ? { display: "none" } : null}>
         <Button icon={<DeleteTwoTone />} onClick={deleteApi}>
           ลบข้อมูลของเดือนนี้
